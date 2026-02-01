@@ -8,8 +8,16 @@
 <div class="header-topbar">
   <div class="header-topbar__content">
     <ul class="header-topbar__links">
-      <li><a href="{{ shop.url }}/pages/contact" class="header-topbar__link">{{ 'header.topbar.contact' | t: default: 'Service Client' }}</a></li>
-      <li><a href="{{ shop.url }}/pages/track-order" class="header-topbar__link">{{ 'header.topbar.track' | t: default: 'Suivre ma commande' }}</a></li>
+      <li>
+        <a href="{{ shop.url }}/pages/contact" class="header-topbar__link">
+          {{- 'header.topbar.contact' | t: default: 'Service Client' -}}
+        </a>
+      </li>
+      <li>
+        <a href="{{ shop.url }}/pages/track-order" class="header-topbar__link">
+          {{- 'header.topbar.track' | t: default: 'Suivre ma commande' -}}
+        </a>
+      </li>
     </ul>
   </div>
 </div>
@@ -22,15 +30,15 @@
       {%- if request.page_type == 'index' -%}
         <h1 class="header-main__logo-heading">
       {%- endif -%}
-        <a href="{{ routes.root_url }}" class="header-main__logo-link" aria-label="{{ shop.name }}">
-          <img
-            src="{{ 'logo_avec_name.png' | asset_url }}"
-            class="header-main__logo-image"
-            alt="{{ shop.name }}"
-            loading="eager"
-            decoding="async"
-          >
-        </a>
+      <a href="{{ routes.root_url }}" class="header-main__logo-link" aria-label="{{ shop.name }}">
+        <img
+          src="{{ 'logo_avec_name.png' | asset_url }}"
+          class="header-main__logo-image"
+          alt="{{ shop.name }}"
+          loading="eager"
+          decoding="async"
+        >
+      </a>
       {%- if request.page_type == 'index' -%}
         </h1>
       {%- endif -%}
@@ -48,10 +56,12 @@
       {%- for collection in collections -%}
         {%- unless collection.handle == 'all' or collection.handle == 'frontpage' -%}
           <li class="header-categories__item">
-            <a 
-              href="{{ collection.url }}" 
+            <a
+              href="{{ collection.url }}"
               class="header-categories__link{% if collection.current %} active{% endif %}"
-              {% if collection.current %}aria-current="page"{% endif %}
+              {% if collection.current %}
+                aria-current="page"
+              {% endif %}
             >
               {{ collection.title | upcase }}
             </a>
@@ -65,8 +75,11 @@
 <!-- MOBILE MENU DRAWER -->
 {%- render 'header-mobile-menu' -%}
 
-{%- if settings.cart_type == "notification" -%}
-  {%- render 'cart-notification', color_scheme: section.settings.color_scheme, desktop_menu_type: section.settings.menu_type_desktop -%}
+{%- if settings.cart_type == 'notification' -%}
+  {%- render 'cart-notification',
+    color_scheme: section.settings.color_scheme,
+    desktop_menu_type: section.settings.menu_type_desktop
+  -%}
 {%- endif -%}
 
 {% javascript %}
@@ -104,7 +117,7 @@
   }
 
   // Close menu when a link is clicked
-  mobileMenuLinks.forEach(link => {
+  mobileMenuLinks.forEach((link) => {
     link.addEventListener('click', closeMobileMenu);
   });
 
@@ -119,21 +132,25 @@
   const headerMain = document.querySelector('.header-main');
   let lastScrollTop = 0;
 
-  window.addEventListener('scroll', () => {
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  window.addEventListener(
+    'scroll',
+    () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-    if (scrollTop > 50) {
-      headerMain.classList.add('scrolled');
-    } else {
-      headerMain.classList.remove('scrolled');
-    }
+      if (scrollTop > 50) {
+        headerMain.classList.add('scrolled');
+      } else {
+        headerMain.classList.remove('scrolled');
+      }
 
-    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-  }, false);
+      lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+    },
+    false
+  );
 
   // Search form submission
   const searchForms = document.querySelectorAll('.header-main__search-form');
-  searchForms.forEach(form => {
+  searchForms.forEach((form) => {
     form.addEventListener('submit', (e) => {
       const input = form.querySelector('input[name="q"]');
       if (!input.value.trim()) {
@@ -167,7 +184,7 @@
 </script>
 
 {%- if request.page_type == 'index' -%}
-  {% assign potential_action_target = request.origin | append: routes.search_url | append: "?q={search_term_string}" %}
+  {% assign potential_action_target = request.origin | append: routes.search_url | append: '?q={search_term_string}' %}
   <script type="application/ld+json">
     {
       "@context": "http://schema.org",
