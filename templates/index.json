@@ -12,9 +12,9 @@
     "hero_objyx": {
       "type": "hero-objyx",
       "settings": {
-        "heading": "-20 % sur les déguisements et accessoires",
-        "text": "<p>Jusqu'au 06/02/2026 à 7h30 | Dans la limite des stocks disponibles | Offre soumise à conditions</p>",
-        "button_label": "Voir la collection carnaval",
+        "heading": "",
+        "text": "",
+        "button_label": "",
         "button_link": "shopify://collections/all"
       }
     },
