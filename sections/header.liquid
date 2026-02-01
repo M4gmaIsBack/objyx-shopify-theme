@@ -23,52 +23,44 @@
         <h1 class="header-main__logo-heading">
       {%- endif -%}
         <a href="{{ routes.root_url }}" class="header-main__logo-link" aria-label="{{ shop.name }}">
-          {%- if settings.logo != blank -%}
-            {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
-            {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
-            {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
-            {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
-            {{ settings.logo | image_url: width: 300 | image_tag:
-              class: 'header-main__logo-image',
-              widths: widths,
-              height: logo_height,
-              width: settings.logo_width,
-              alt: logo_alt,
-              sizes: sizes,
-              preload: true
-            }}
-          {%- else -%}
-            <span class="header-main__logo-text">{{ shop.name }}</span>
-          {%- endif -%}
+          <img
+            src="{{ 'logo_avec_name.png' | asset_url }}"
+            class="header-main__logo-image"
+            alt="{{ shop.name }}"
+            loading="eager"
+            decoding="async"
+          >
         </a>
       {%- if request.page_type == 'index' -%}
         </h1>
       {%- endif -%}
     </div>
 
-    <!-- NAVIGATION PRINCIPALE (Desktop) -->
-    {%- if section.settings.menu != blank -%}
-      <nav class="header-main__nav" aria-label="{{ 'header.navigation.label' | t: default: 'Navigation principale' }}">
-        <ul class="header-main__menu">
-          {%- for link in linklists[section.settings.menu].links -%}
-            <li class="header-main__menu-item">
-              <a 
-                href="{{ link.url }}" 
-                class="header-main__menu-link{% if link.active %} active{% endif %}"
-                {% if link.current %}aria-current="page"{% endif %}
-              >
-                {{ link.title | upcase }}
-              </a>
-            </li>
-          {%- endfor -%}
-        </ul>
-      </nav>
-    {%- endif -%}
-
     <!-- ACTIONS (Search, Account, Cart) -->
     {%- render 'header-icons' -%}
   </div>
 </header>
+
+<!-- CATEGORIES BAR (sous le header) - Affiche automatiquement les collections -->
+<nav class="header-categories" aria-label="{{ 'header.categories.label' | t: default: 'Catégories' }}">
+  <div class="header-categories__container">
+    <ul class="header-categories__list">
+      {%- for collection in collections -%}
+        {%- unless collection.handle == 'all' or collection.handle == 'frontpage' -%}
+          <li class="header-categories__item">
+            <a 
+              href="{{ collection.url }}" 
+              class="header-categories__link{% if collection.current %} active{% endif %}"
+              {% if collection.current %}aria-current="page"{% endif %}
+            >
+              {{ collection.title | upcase }}
+            </a>
+          </li>
+        {%- endunless -%}
+      {%- endfor -%}
+    </ul>
+  </div>
+</nav>
 
 <!-- MOBILE MENU DRAWER -->
 {%- render 'header-mobile-menu' -%}

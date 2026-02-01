@@ -547,6 +547,9 @@
       "toggle": "Open Menu",
       "close": "Close Menu"
     },
+    "categories": {
+      "label": "Categories"
+    },
     "search": {
       "placeholder": "Search",
       "label": "Search"
@@ -559,9 +562,5 @@
       "label": "Shopping Cart",
       "count": "Cart: {{ count }} item"
     }
-  },
-  "categories": {
-    "label": "Categories",
-    "collections": "Collections"
   }
 }

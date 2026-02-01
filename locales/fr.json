@@ -557,6 +557,9 @@
       "toggle": "Ouvrir le menu",
       "close": "Fermer le menu"
     },
+    "categories": {
+      "label": "Catégories"
+    },
     "search": {
       "placeholder": "Rechercher",
       "label": "Recherche"
@@ -569,9 +572,5 @@
       "label": "Panier",
       "count": "Panier : {{ count }} article"
     }
-  },
-  "categories": {
-    "label": "Catégories",
-    "collections": "Collections"
   }
 }
