@@ -1,0 +1,122 @@
+{{ 'section-products-list-objyx.css' | asset_url | stylesheet_tag }}
+{{ 'product-card-add-to-cart.js' | asset_url | script_tag }}
+
+<section class="products-list-objyx">
+  <div class="products-list-objyx__container">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="products-list-objyx__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    <div class="products-list-objyx__grid" id="productsGrid">
+      {%- assign products = section.settings.collection.products -%}
+      {%- assign items_per_page = section.settings.products_per_page -%}
+      
+      {%- for product in products limit: items_per_page -%}
+        {%- render 'product-card-objyx', product: product -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if products.size > items_per_page -%}
+      <div class="products-list-objyx__load-more">
+        <button 
+          class="products-list-objyx__button" 
+          id="loadMoreBtn"
+          data-total="{{ products.size }}"
+          data-loaded="{{ items_per_page }}"
+          data-per-page="{{ items_per_page }}"
+        >
+          Charger plus
+        </button>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const btn = document.getElementById('loadMoreBtn');
+    if (!btn) return;
+
+    btn.addEventListener('click', function() {
+      const grid = document.getElementById('productsGrid');
+      const loaded = parseInt(btn.dataset.loaded);
+      const perPage = parseInt(btn.dataset.perPage);
+      const total = parseInt(btn.dataset.total);
+      const next = loaded + perPage;
+
+      // Récupérer les produits via AJAX ou afficher les produits cachés
+      const allProducts = grid.querySelectorAll('.product-card-objyx');
+      
+      for (let i = loaded; i < Math.min(next, total); i++) {
+        if (allProducts[i]) {
+          allProducts[i].style.display = 'block';
+        }
+      }
+
+      btn.dataset.loaded = next;
+
+      if (next >= total) {
+        btn.style.display = 'none';
+      }
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Liste Produits",
+  "tag": "section",
+  "class": "section-products-list",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Titre de la section"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 4,
+      "max": 24,
+      "step": 4,
+      "default": 8,
+      "label": "Produits par page"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4,
+      "label": "Colonnes sur desktop"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "options": [
+        {
+          "value": "1",
+          "label": "1 colonne"
+        },
+        {
+          "value": "2",
+          "label": "2 colonnes"
+        }
+      ],
+      "default": "2",
+      "label": "Colonnes sur mobile"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Liste Produits"
+    }
+  ]
+}
+{% endschema %}

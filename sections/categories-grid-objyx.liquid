@@ -1,6 +1,10 @@
 {{ 'section-categories-grid-objyx.css' | asset_url | stylesheet_tag }}
 
-<section class="categories-grid-objyx section-categories-grid" data-desktop-columns="{{ section.settings.columns_desktop }}" data-mobile-columns="{{ section.settings.columns_mobile }}">
+<section
+  class="categories-grid-objyx section-categories-grid"
+  data-desktop-columns="{{ section.settings.columns_desktop }}"
+  data-mobile-columns="{{ section.settings.columns_mobile }}"
+>
   <div class="categories-grid-objyx__container">
     {%- if section.settings.heading != blank -%}
       <h2 class="categories-grid-objyx__heading">{{ section.settings.heading }}</h2>
@@ -8,15 +12,21 @@
 
     <div class="categories-grid-objyx__grid">
       {%- for collection in collections -%}
-        {%- unless collection.handle == 'all' or collection.handle == 'frontpage' or collection.handle == 'nouveautes' or collection.featured_image == blank -%}
+        {%- unless collection.handle == 'all'
+          or collection.handle == 'frontpage'
+          or collection.handle == 'nouveautes'
+          or collection.featured_image == blank
+        -%}
           {%- if collection.featured_image and collection.featured_image.src -%}
             <a href="{{ collection.url }}" class="categories-grid-objyx__card">
               <div class="categories-grid-objyx__image-wrapper">
                 <img
                   src="{{ collection.featured_image | image_url: width: 600 }}"
-                  srcset="{{ collection.featured_image | image_url: width: 300 }} 300w,
-                          {{ collection.featured_image | image_url: width: 600 }} 600w,
-                          {{ collection.featured_image | image_url: width: 900 }} 900w"
+                  srcset="
+                    {{ collection.featured_image | image_url: width: 300 }} 300w,
+                    {{ collection.featured_image | image_url: width: 600 }} 600w,
+                    {{ collection.featured_image | image_url: width: 900 }} 900w
+                  "
                   sizes="(min-width: 990px) 25vw, (min-width: 750px) 33vw, 50vw"
                   alt="{{ collection.title | escape }}"
                   loading="lazy"

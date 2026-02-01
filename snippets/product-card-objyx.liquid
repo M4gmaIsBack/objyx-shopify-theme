@@ -1,0 +1,90 @@
+<div class="product-card-objyx">
+  <div class="product-card-objyx__image-wrapper">
+    {%- if product.featured_image -%}
+      <img
+        src="{{ product.featured_image | image_url: width: 400 }}"
+        alt="{{ product.featured_image.alt | escape }}"
+        loading="lazy"
+        class="product-card-objyx__image"
+      >
+    {%- endif -%}
+
+    {%- if product.tags contains 'new' -%}
+      <span class="product-card-objyx__badge">New</span>
+    {%- endif -%}
+
+    <button 
+      class="product-card-objyx__add-to-cart" 
+      title="Ajouter au panier"
+      data-product-id="{{ product.id }}"
+      data-variant-id="{{ product.first_available_variant.id }}"
+      type="button"
+    >
+      <svg class="product-card-objyx__cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="9" cy="21" r="1"></circle>
+        <circle cx="20" cy="21" r="1"></circle>
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+      </svg>
+    </button>
+  </div>
+
+  <a href="{{ product.url }}" class="product-card-objyx__link"></a>
+
+  <div class="product-card-objyx__content">
+    <h3 class="product-card-objyx__title">{{ product.title }}</h3>
+
+    {%- if product.options_with_values.size > 0 -%}
+      {%- for option in product.options_with_values -%}
+        {%- if option.name == 'Color' or option.name == 'Couleur' -%}
+          <div class="product-card-objyx__colors">
+            {%- assign color_count = option.values.size -%}
+            {%- for value in option.values limit: 5 -%}
+              {%- assign color_class = value | downcase | replace: ' ', '-' -%}
+              <span 
+                class="product-card-objyx__color product-card-objyx__color--{{ color_class }}"
+                title="{{ value }}"
+              ></span>
+            {%- endfor -%}
+            {%- if color_count > 5 -%}
+              <span class="product-card-objyx__color-count">+{{ color_count | minus: 5 }}</span>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+
+    {%- if product.metafields.custom -%}
+      <div class="product-card-objyx__meta-fields">
+        {%- for metafield in product.metafields.custom -%}
+          {%- if metafield[1].value -%}
+            <div class="product-card-objyx__meta-spec">
+              <span class="product-card-objyx__meta-label">{{ metafield[0] | replace: '_', ' ' | capitalize }}:</span>
+              <div class="product-card-objyx__meta-values">
+                {%- assign meta_value = metafield[1].value | default: '' -%}
+                {%- if meta_value contains ',' -%}
+                  {%- assign values = meta_value | split: ',' -%}
+                  {%- for val in values -%}
+                    <span class="product-card-objyx__meta-badge">{{ val | strip }}</span>
+                  {%- endfor -%}
+                {%- else -%}
+                  <span class="product-card-objyx__meta-badge">{{ meta_value }}</span>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    <div class="product-card-objyx__pricing">
+      {%- if product.compare_at_price_max > product.price -%}
+        <span class="product-card-objyx__price-original">{{ product.compare_at_price_max | money }}</span>
+      {%- endif -%}
+      <span class="product-card-objyx__price">{{ product.price | money }}</span>
+      {%- if product.compare_at_price_max > product.price -%}
+        {%- assign discount_percent = product.compare_at_price_max | minus: product.price | times: 100 | divided_by: product.compare_at_price_max | round -%}
+        <span class="product-card-objyx__discount">-{{ discount_percent }}%</span>
+      {%- endif -%}
+    </div>
+  </div>
+</div>

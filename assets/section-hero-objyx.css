@@ -5,19 +5,19 @@
 }
 
 .hero-objyx__container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  display: flex;
-  align-items: center;
-  min-height: 520px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    min-height: 520px;
 }
 
 .hero-objyx__content {
     padding: 2rem;
     border-radius: 20px;
-  max-width: 450px;
-  margin-right: auto;
+    max-width: 450px;
+    margin-right: auto;
 }
 
 .hero-objyx__heading {

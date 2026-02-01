@@ -54,11 +54,22 @@
         "columns_desktop": 4,
         "columns_mobile": "2"
       }
+    },
+    "products_list": {
+      "type": "products-list-objyx",
+      "settings": {
+        "heading": "Tous nos produits",
+        "collection": "all",
+        "products_per_page": 8,
+        "columns_desktop": 4,
+        "columns_mobile": "2"
+      }
     }
   },
   "order": [
     "hero_objyx",
     "featured_collection",
-    "collage"
+    "collage",
+    "products_list"
   ]
 }
