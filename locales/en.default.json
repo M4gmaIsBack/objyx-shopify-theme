@@ -562,5 +562,10 @@
       "label": "Shopping Cart",
       "count": "Cart: {{ count }} item"
     }
+  },
+  "sections": {
+    "categories_grid": {
+      "products": "products"
+    }
   }
 }
