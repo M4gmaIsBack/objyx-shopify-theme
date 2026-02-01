@@ -527,5 +527,32 @@
       "send_on": "YYYY-MM-DD",
       "send_on_label": "Send on (optional)"
     }
+  },
+  "header": {
+    "topbar": {
+      "contact": "Customer Service",
+      "track": "Track My Order"
+    },
+    "navigation": {
+      "label": "Main Navigation",
+      "toggle": "Open Menu",
+      "close": "Close Menu"
+    },
+    "search": {
+      "placeholder": "Search",
+      "label": "Search"
+    },
+    "account": {
+      "my_account": "My Account",
+      "login": "Sign In"
+    },
+    "cart": {
+      "label": "Shopping Cart",
+      "count": "Cart: {{ count }} item"
+    }
+  },
+  "categories": {
+    "label": "Categories",
+    "collections": "Collections"
   }
 }

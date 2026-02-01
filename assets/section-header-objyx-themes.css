@@ -1,0 +1,179 @@
+/* ========================================
+   THEME PRESETS - HEADER OBJYX
+   Variables CSS préconfigurées pour différents thèmes
+   ======================================== */
+
+/* ========================================
+   PRESET 1 - OBJYX Default (Blanc moderne)
+   ======================================== */
+:root {
+  --header-bg: #ffffff;
+  --header-text: #333333;
+  --header-border: #f0f0f0;
+  --header-hover: #007bff;
+  --header-hover-light: #f5f5f5;
+}
+
+/* ========================================
+   PRESET 2 - OBJYX Rose (Pour version enfant joyeuse)
+   Décommenter pour activer
+   ======================================== */
+/*
+:root {
+  --header-bg: #ffffff;
+  --header-text: #1a1a1a;
+  --header-border: #ffe0ec;
+  --header-hover: #ff6b9d;
+  --header-hover-light: #fff0f5;
+}
+*/
+
+/* ========================================
+   PRESET 3 - OBJYX Violet (Pour version premium)
+   Décommenter pour activer
+   ======================================== */
+/*
+:root {
+  --header-bg: #ffffff;
+  --header-text: #4a235a;
+  --header-border: #e6d9f0;
+  --header-hover: #7b2cbf;
+  --header-hover-light: #f3e7ff;
+}
+*/
+
+/* ========================================
+   PRESET 4 - OBJYX Turquoise (Thème aquatique)
+   Décommenter pour activer
+   ======================================== */
+/*
+:root {
+  --header-bg: #ffffff;
+  --header-text: #0a3d3a;
+  --header-border: #d0f0f0;
+  --header-hover: #00a9a9;
+  --header-hover-light: #e0f8f8;
+}
+*/
+
+/* ========================================
+   PRESET 5 - OBJYX Dark (Mode sombre)
+   Décommenter pour activer
+   ======================================== */
+/*
+:root {
+  --header-bg: #1a1a1a;
+  --header-text: #ffffff;
+  --header-border: #333333;
+  --header-hover: #ffd700;
+  --header-hover-light: #2a2a2a;
+}
+*/
+
+/* ========================================
+   PRESET 6 - OBJYX Noël (Festif rouge/vert)
+   Décommenter pour activer
+   ======================================== */
+/*
+:root {
+  --header-bg: #ffffff;
+  --header-text: #1a1a1a;
+  --header-border: #e0e0e0;
+  --header-hover: #c41e3a;
+  --header-hover-light: #fff5f5;
+}
+*/
+
+/* ========================================
+   PRESET 7 - OBJYX Halloween (Orange/Noir)
+   Décommenter pour activer
+   ======================================== */
+/*
+:root {
+  --header-bg: #f8f4e8;
+  --header-text: #2a2a2a;
+  --header-border: #e8dcc8;
+  --header-hover: #ff8c00;
+  --header-hover-light: #fff5e6;
+}
+*/
+
+/* ========================================
+   PRESET 8 - OBJYX Easter (Pastel)
+   Décommenter pour activer
+   ======================================== */
+/*
+:root {
+  --header-bg: #ffffff;
+  --header-text: #5a5a5a;
+  --header-border: #f0e6f0;
+  --header-hover: #ff99cc;
+  --header-hover-light: #fff5f8;
+}
+*/
+
+/* ========================================
+   PERSONNALISATION - Guide
+   ======================================== */
+
+/*
+   Pour créer votre propre thème :
+
+   1. Copiez les 5 lignes variables ci-dessus
+   2. Modifiez les couleurs hexadécimales
+   3. Testez et ajustez selon vos préférences
+
+   Variables disponibles :
+   - --header-bg : Fond du header
+   - --header-text : Couleur du texte
+   - --header-border : Couleur des bordures
+   - --header-hover : Couleur au survol des liens
+   - --header-hover-light : Fond au survol
+
+   Outils pour trouver des palettes :
+   - https://colorhunt.co
+   - https://coolors.co
+   - https://colordot.it
+   - https://flatuicolors.com
+
+   Exemple personnalisé :
+
+   :root {
+     --header-bg: #f9f7f4;           // Beige clair
+     --header-text: #2c1810;         // Marron foncé
+     --header-border: #e8dcc8;       // Beige clair bordure
+     --header-hover: #d4a574;        // Caramel
+     --header-hover-light: #fdf8f3;  // Crème
+   }
+*/
+
+/* ========================================
+   Mode sombre automatique (au choix de l'OS)
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --header-bg: #1a1a1a;
+    --header-text: #ffffff;
+    --header-border: #333333;
+    --header-hover: #4da6ff;
+    --header-hover-light: #2a2a2a;
+  }
+}
+
+/* Annulez le mode sombre avec cette classe (si nécessaire) */
+html[data-theme="light"] {
+  --header-bg: #ffffff;
+  --header-text: #333333;
+  --header-border: #f0f0f0;
+  --header-hover: #007bff;
+  --header-hover-light: #f5f5f5;
+}
+
+html[data-theme="dark"] {
+  --header-bg: #1a1a1a;
+  --header-text: #ffffff;
+  --header-border: #333333;
+  --header-hover: #4da6ff;
+  --header-hover-light: #2a2a2a;
+}

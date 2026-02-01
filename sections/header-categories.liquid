@@ -1,0 +1,29 @@
+<link rel="stylesheet" href="{{ 'section-header-categories.css' | asset_url }}" media="print" onload="this.media='all'">
+
+<!-- CATEGORIES BAR -->
+<section class="header-categories">
+  <div class="header-categories__container">
+    <ul class="header-categories__list">
+      {%- for collection in collections.all -%}
+        {%- if collection.handle != 'all' -%}
+          <li class="header-categories__item">
+            <a 
+              href="{{ collection.url }}" 
+              class="header-categories__link"
+            >
+              {{ collection.title }}
+            </a>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Catégories",
+  "class": "section-header-categories",
+  "settings": []
+}
+{% endschema %}

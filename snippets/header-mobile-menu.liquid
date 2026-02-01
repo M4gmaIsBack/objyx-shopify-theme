@@ -1,0 +1,29 @@
+{%- # Menu mobile drawer du header -%}
+
+{%- if section.settings.menu != blank -%}
+  <div class="header-mobile-menu-overlay" id="mobile-menu-overlay"></div>
+  <nav class="header-mobile-menu" id="mobile-menu" aria-label="{{ 'header.navigation.label' | t }}">
+    <div class="header-mobile-menu__close">
+      <button 
+        class="header-mobile-menu__close-btn"
+        id="mobile-menu-close"
+        aria-label="{{ 'header.navigation.close' | t }}"
+      >
+        ✕
+      </button>
+    </div>
+    <ul class="header-mobile-menu__list">
+      {%- for link in linklists[section.settings.menu].links -%}
+        <li class="header-mobile-menu__item">
+          <a 
+            href="{{ link.url }}" 
+            class="header-mobile-menu__link{% if link.active %} active{% endif %}"
+            {% if link.current %}aria-current="page"{% endif %}
+          >
+            {{ link.title }}
+          </a>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </nav>
+{%- endif -%}

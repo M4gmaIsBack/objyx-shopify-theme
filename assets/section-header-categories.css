@@ -1,0 +1,186 @@
+/* ========================================
+   CATEGORIES BAR - OBJYX
+   Barre de catégories reliée aux collections Shopify
+   ======================================== */
+
+/* ========================================
+   CATEGORIES BAR
+   ======================================== */
+
+.header-categories {
+  background-color: var(--header-bg);
+  border-bottom: 1px solid var(--header-border);
+  padding: 0;
+  z-index: 99;
+}
+
+.header-categories__container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.header-categories__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  flex-wrap: wrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.header-categories__item {
+  display: flex;
+  align-items: center;
+}
+
+.header-categories__link {
+  display: block;
+  padding: 1rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--header-text);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  transition: all 0.3s ease;
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+  position: relative;
+}
+
+.header-categories__link:hover {
+  color: var(--header-hover);
+  border-bottom-color: var(--header-hover);
+  background-color: var(--header-hover-light);
+}
+
+.header-categories__link:focus {
+  outline: 2px solid var(--header-hover);
+  outline-offset: -2px;
+}
+
+.header-categories__link.active {
+  color: var(--header-hover);
+  border-bottom-color: var(--header-hover);
+  background-color: var(--header-hover-light);
+}
+
+/* ========================================
+   SCROLLBAR CUSTOM (pour la barre scrollable)
+   ======================================== */
+
+.header-categories__list::-webkit-scrollbar {
+  height: 4px;
+}
+
+.header-categories__list::-webkit-scrollbar-track {
+  background: var(--header-hover-light);
+}
+
+.header-categories__list::-webkit-scrollbar-thumb {
+  background: var(--header-hover);
+  border-radius: 2px;
+}
+
+.header-categories__list::-webkit-scrollbar-thumb:hover {
+  background: #005fc9;
+}
+
+/* ========================================
+   MOBILE - Slider horizontal
+   ======================================== */
+
+@media (max-width: 749px) {
+  .header-categories {
+    border-top: 1px solid var(--header-border);
+  }
+
+  .header-categories__container {
+    padding: 0 1rem;
+  }
+
+  .header-categories__list {
+    justify-content: flex-start;
+    gap: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    padding: 0;
+  }
+
+  .header-categories__item {
+    scroll-snap-align: start;
+  }
+
+  .header-categories__link {
+    padding: 0.75rem 1rem;
+    font-size: 0.8125rem;
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 479px) {
+  .header-categories__link {
+    padding: 0.75rem 0.875rem;
+    font-size: 0.75rem;
+  }
+}
+
+/* ========================================
+   DESKTOP - Centré
+   ======================================== */
+
+@media (min-width: 750px) {
+  .header-categories__list {
+    justify-content: center;
+  }
+
+  .header-categories__link {
+    padding: 1rem 1.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* ========================================
+   STICKY (optionnel)
+   ======================================== */
+
+.header-categories.sticky {
+  position: sticky;
+  top: var(--header-height, 80px);
+  z-index: 99;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* ========================================
+   ANIMATION SMOOTH SCROLL
+   ======================================== */
+
+.header-categories__link {
+  scroll-behavior: smooth;
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  .header-categories {
+    background-color: var(--header-bg);
+    border-color: var(--header-border);
+  }
+}
+
+/* ========================================
+   PRINT
+   ======================================== */
+
+@media print {
+  .header-categories {
+    display: none;
+  }
+}

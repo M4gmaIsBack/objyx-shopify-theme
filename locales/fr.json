@@ -537,6 +537,32 @@
       "send_on_label": "Envoyer le (facultatif)",
       "expanded": "Formulaire de destinataire de carte-cadeau agrandi",
       "collapsed": "Formulaire de destinataire de carte-cadeau réduit"
+    }  },
+  "header": {
+    "topbar": {
+      "contact": "Service Client",
+      "track": "Suivre ma commande"
+    },
+    "navigation": {
+      "label": "Navigation principale",
+      "toggle": "Ouvrir le menu",
+      "close": "Fermer le menu"
+    },
+    "search": {
+      "placeholder": "Rechercher",
+      "label": "Recherche"
+    },
+    "account": {
+      "my_account": "Mon compte",
+      "login": "Connexion"
+    },
+    "cart": {
+      "label": "Panier",
+      "count": "Panier : {{ count }} article"
     }
+  },
+  "categories": {
+    "label": "Catégories",
+    "collections": "Collections"
   }
 }
