@@ -358,6 +358,9 @@
       "carousel": "Carrousel",
       "slide": "Diapositive"
     },
+    "categories_grid": {
+      "products": "produits"
+    },
     "page": {
       "title": "Titre de la page"
     },
@@ -573,9 +576,4 @@
       "count": "Panier : {{ count }} article"
     }
   },
-  "sections": {
-    "categories_grid": {
-      "products": "produits"
-    }
-  }
 }

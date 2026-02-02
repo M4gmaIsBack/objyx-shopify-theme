@@ -10,7 +10,7 @@
     <div class="products-list-objyx__grid" id="productsGrid">
       {%- assign products = section.settings.collection.products -%}
       {%- assign items_per_page = section.settings.products_per_page -%}
-      
+
       {%- for product in products limit: items_per_page -%}
         {%- render 'product-card-objyx', product: product -%}
       {%- endfor -%}
@@ -18,8 +18,8 @@
 
     {%- if products.size > items_per_page -%}
       <div class="products-list-objyx__load-more">
-        <button 
-          class="products-list-objyx__button" 
+        <button
+          class="products-list-objyx__button"
           id="loadMoreBtn"
           data-total="{{ products.size }}"
           data-loaded="{{ items_per_page }}"
@@ -33,11 +33,11 @@
 </section>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function () {
     const btn = document.getElementById('loadMoreBtn');
     if (!btn) return;
 
-    btn.addEventListener('click', function() {
+    btn.addEventListener('click', function () {
       const grid = document.getElementById('productsGrid');
       const loaded = parseInt(btn.dataset.loaded);
       const perPage = parseInt(btn.dataset.perPage);
@@ -46,7 +46,7 @@
 
       // Récupérer les produits via AJAX ou afficher les produits cachés
       const allProducts = grid.querySelectorAll('.product-card-objyx');
-      
+
       for (let i = loaded; i < Math.min(next, total); i++) {
         if (allProducts[i]) {
           allProducts[i].style.display = 'block';

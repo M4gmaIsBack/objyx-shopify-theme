@@ -13,8 +13,8 @@
       <span class="product-card-objyx__badge">New</span>
     {%- endif -%}
 
-    <button 
-      class="product-card-objyx__add-to-cart" 
+    <button
+      class="product-card-objyx__add-to-cart"
       title="Ajouter au panier"
       data-product-id="{{ product.id }}"
       data-variant-id="{{ product.first_available_variant.id }}"
@@ -40,7 +40,7 @@
             {%- assign color_count = option.values.size -%}
             {%- for value in option.values limit: 5 -%}
               {%- assign color_class = value | downcase | replace: ' ', '-' -%}
-              <span 
+              <span
                 class="product-card-objyx__color product-card-objyx__color--{{ color_class }}"
                 title="{{ value }}"
               ></span>
@@ -53,28 +53,37 @@
       {%- endfor -%}
     {%- endif -%}
 
-    {%- if product.metafields.custom -%}
-      <div class="product-card-objyx__meta-fields">
-        {%- for metafield in product.metafields.custom -%}
-          {%- if metafield[1].value -%}
+    <div class="product-card-objyx__meta-fields">
+      {%- if product.options_with_values.size > 0 -%}
+        {%- for option in product.options_with_values -%}
+          {%- assign option_handle = option.name | handleize -%}
+          {%- if option_handle == 'couleur' or option_handle == 'color' -%}
             <div class="product-card-objyx__meta-spec">
-              <span class="product-card-objyx__meta-label">{{ metafield[0] | replace: '_', ' ' | capitalize }}:</span>
+              <span class="product-card-objyx__meta-label">{{ option.name }}:</span>
               <div class="product-card-objyx__meta-values">
-                {%- assign meta_value = metafield[1].value | default: '' -%}
-                {%- if meta_value contains ',' -%}
-                  {%- assign values = meta_value | split: ',' -%}
-                  {%- for val in values -%}
-                    <span class="product-card-objyx__meta-badge">{{ val | strip }}</span>
-                  {%- endfor -%}
-                {%- else -%}
-                  <span class="product-card-objyx__meta-badge">{{ meta_value }}</span>
-                {%- endif -%}
+                {%- for value in option.values -%}
+                  <span class="product-card-objyx__meta-badge">{{ value }}</span>
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- elsif option_handle == 'materiau-du-jeu-jouet'
+            or option_handle == 'matiere-du-jeu-jouet'
+            or option_handle == 'material'
+            or option_handle == 'materiau'
+            or option_handle == 'matiere'
+          -%}
+            <div class="product-card-objyx__meta-spec">
+              <span class="product-card-objyx__meta-label">{{ option.name }}:</span>
+              <div class="product-card-objyx__meta-values">
+                {%- for value in option.values -%}
+                  <span class="product-card-objyx__meta-badge">{{ value }}</span>
+                {%- endfor -%}
               </div>
             </div>
           {%- endif -%}
         {%- endfor -%}
-      </div>
-    {%- endif -%}
+      {%- endif -%}
+    </div>
 
     <div class="product-card-objyx__pricing">
       {%- if product.compare_at_price_max > product.price -%}
@@ -82,7 +91,12 @@
       {%- endif -%}
       <span class="product-card-objyx__price">{{ product.price | money }}</span>
       {%- if product.compare_at_price_max > product.price -%}
-        {%- assign discount_percent = product.compare_at_price_max | minus: product.price | times: 100 | divided_by: product.compare_at_price_max | round -%}
+        {%- assign discount_percent = product.compare_at_price_max
+          | minus: product.price
+          | times: 100
+          | divided_by: product.compare_at_price_max
+          | round
+        -%}
         <span class="product-card-objyx__discount">-{{ discount_percent }}%</span>
       {%- endif -%}
     </div>
