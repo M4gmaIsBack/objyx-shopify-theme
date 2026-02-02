@@ -27,5 +27,20 @@
         </li>
       {%- endfor -%}
     </ul>
+
+    <div class="header-mobile-menu__section">
+      <p class="header-mobile-menu__section-title">{{ 'header.categories.label' | t: default: 'Catégories' }}</p>
+      <ul class="header-mobile-menu__list">
+        {%- for collection in collections -%}
+          {%- unless collection.handle == 'all' or collection.handle == 'frontpage' -%}
+            <li class="header-mobile-menu__item">
+              <a href="{{ collection.url }}" class="header-mobile-menu__link">
+                {{ collection.title }}
+              </a>
+            </li>
+          {%- endunless -%}
+        {%- endfor -%}
+      </ul>
+    </div>
   </nav>
 {%- endif -%}
