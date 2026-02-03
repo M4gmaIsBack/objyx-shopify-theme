@@ -1,4 +1,15 @@
-<div class="product-card-objyx">
+{%- capture images_json -%}
+[
+{%- for image in product.images -%}
+  "{{ image | image_url: width: 900 }}"{% unless forloop.last %},{% endunless %}
+{%- endfor -%}
+]
+{%- endcapture -%}
+
+<div
+  class="product-card-objyx{% if card_hidden %} is-hidden{% endif %}"
+  data-images="{{ images_json | strip_newlines | escape }}"
+>
   <div class="product-card-objyx__media">
     <a href="{{ product.url }}" class="product-card-objyx__image-wrapper">
       {%- if product.featured_image -%}
@@ -7,6 +18,7 @@
           alt="{{ product.featured_image.alt | escape }}"
           loading="lazy"
           class="product-card-objyx__image"
+          data-default-src="{{ product.featured_image | image_url: width: 500 }}"
         >
       {%- endif -%}
 
@@ -63,14 +75,26 @@
       {%- if product.has_only_default_variant -%}
         <span class="product-card-objyx__variant-chip is-unique">Unique</span>
       {%- elsif has_color_option and color_option != nil -%}
+        {%- assign option_position = color_option.position -%}
+        {%- assign option_index = option_position | minus: 1 -%}
         <div class="product-card-objyx__swatches" aria-label="Couleurs disponibles">
           {%- assign color_count = color_option.values.size -%}
           {%- for value in color_option.values limit: 6 -%}
             {%- assign color_class = value | downcase | replace: ' ', '-' | replace: '/', '-' -%}
-            <span
+            {%- assign variant_image = '' -%}
+            {%- for variant in product.variants -%}
+              {%- if variant.options[option_index] == value and variant.featured_image -%}
+                {%- assign variant_image = variant.featured_image | image_url: width: 900 -%}
+                {%- break -%}
+              {%- endif -%}
+            {%- endfor -%}
+            <button
               class="product-card-objyx__swatch product-card-objyx__swatch--{{ color_class }}"
+              type="button"
               title="{{ value }}"
-            ></span>
+              aria-label="{{ value }}"
+              data-variant-image="{{ variant_image }}"
+            ></button>
           {%- endfor -%}
           {%- if color_count > 6 -%}
             <span class="product-card-objyx__swatch-count">+{{ color_count | minus: 6 }}</span>
@@ -130,3 +154,4 @@
     </div>
   </div>
 </div>
+

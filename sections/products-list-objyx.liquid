@@ -1,5 +1,6 @@
 {{ 'section-products-list-objyx.css' | asset_url | stylesheet_tag }}
 {{ 'product-card-add-to-cart.js' | asset_url | script_tag }}
+{{ 'product-card-objyx.js' | asset_url | script_tag }}
 
 {%- assign heading_text = section.settings.heading -%}
 {%- if heading_text == blank and section.settings.collection != blank -%}
@@ -34,8 +35,13 @@
       {%- assign products = section.settings.collection.products -%}
       {%- assign items_per_page = section.settings.products_per_page -%}
 
-      {%- for product in products limit: items_per_page -%}
-        {%- render 'product-card-objyx', product: product -%}
+      {%- for product in products -%}
+        {%- if forloop.index > items_per_page -%}
+          {%- assign card_hidden = true -%}
+        {%- else -%}
+          {%- assign card_hidden = false -%}
+        {%- endif -%}
+        {%- render 'product-card-objyx', product: product, card_hidden: card_hidden -%}
       {%- endfor -%}
     </div>
 
@@ -72,7 +78,7 @@
 
       for (let i = loaded; i < Math.min(next, total); i++) {
         if (allProducts[i]) {
-          allProducts[i].style.display = 'block';
+          allProducts[i].classList.remove('is-hidden');
         }
       }
 
