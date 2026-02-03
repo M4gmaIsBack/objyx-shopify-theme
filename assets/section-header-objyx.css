@@ -657,7 +657,7 @@ button:focus-visible {
         --header-bg: #1a1a1a;
         --header-text: #ffffff;
         --header-border: #333333;
-        --header-hover: #4da6ff;
+        --header-hover: #f58220;
         --header-hover-light: #2a2a2a;
     }
 }
