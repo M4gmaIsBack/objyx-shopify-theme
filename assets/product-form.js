@@ -44,13 +44,19 @@ if (!customElements.get('product-form')) {
         delete config.headers['Content-Type'];
 
         const formData = new FormData(this.form);
-        if (this.cart) {
+        const canRenderCart =
+          this.cart &&
+          typeof this.cart.getSectionsToRender === 'function' &&
+          typeof this.cart.renderContents === 'function';
+        if (canRenderCart) {
           formData.append(
             'sections',
             this.cart.getSectionsToRender().map((section) => section.id)
           );
           formData.append('sections_url', window.location.pathname);
           this.cart.setActiveElement(document.activeElement);
+        } else {
+          this.cart = null;
         }
         config.body = formData;
 
@@ -74,7 +80,7 @@ if (!customElements.get('product-form')) {
               this.error = true;
               return;
             } else if (!this.cart) {
-              window.location = window.routes.cart_url;
+              window.location = (window.routes && window.routes.cart_url) ? window.routes.cart_url : '/cart';
               return;
             }
 

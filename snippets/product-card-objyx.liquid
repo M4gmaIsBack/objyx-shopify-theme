@@ -23,7 +23,11 @@
         >
       {%- endif -%}
 
-      {%- if tag_string contains 'new' or tag_string contains 'nouveau' or tag_string contains 'nouveaute' -%}
+      {%- if tag_string contains 'new'
+        or tag_string contains 'nouveau'
+        or tag_string contains 'nouveaute'
+        or tag_string contains 'nouvea'
+      -%}
         <span class="product-card-objyx__badge">Nouveau</span>
       {%- endif -%}
 
