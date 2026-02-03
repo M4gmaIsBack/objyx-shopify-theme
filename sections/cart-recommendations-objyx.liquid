@@ -1,0 +1,134 @@
+{{ 'section-products-list-objyx.css' | asset_url | stylesheet_tag }}
+{{ 'product-card-add-to-cart.js' | asset_url | script_tag }}
+{{ 'product-card-objyx.js' | asset_url | script_tag }}
+
+{%- if cart.item_count > 0 -%}
+  <section
+    class="products-list-objyx section-products-list cart-recommendations-objyx"
+    data-desktop-columns="{{ section.settings.columns_desktop }}"
+    data-mobile-columns="{{ section.settings.columns_mobile }}"
+  >
+    <product-recommendations
+      data-url="{{ routes.product_recommendations_url }}?limit={{ section.settings.products_to_show }}&intent=related"
+      data-section-id="{{ section.id }}"
+      data-product-id="{{ cart.items.first.product.id }}"
+    >
+      {% if recommendations.performed and recommendations.products_count > 0 %}
+        <div class="products-list-objyx__container">
+          {%- if section.settings.heading != blank or section.settings.subheading != blank or section.settings.kicker != blank -%}
+            <div class="products-list-objyx__title">
+              {%- if section.settings.kicker != blank -%}
+                <span class="products-list-objyx__kicker">{{ section.settings.kicker }}</span>
+              {%- endif -%}
+              {%- if section.settings.heading != blank -%}
+                <h2 class="products-list-objyx__heading">{{ section.settings.heading }}</h2>
+              {%- endif -%}
+              {%- if section.settings.subheading != blank -%}
+                <p class="products-list-objyx__subheading">{{ section.settings.subheading }}</p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+
+          <div class="products-list-objyx__grid">
+            {%- for recommendation in recommendations.products -%}
+              {%- render 'product-card-objyx', product: recommendation -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      {% endif %}
+    </product-recommendations>
+  </section>
+{%- endif -%}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const scriptEl = document.currentScript;
+    if (!scriptEl) return;
+    const section = scriptEl.closest('.cart-recommendations-objyx');
+    if (!section) return;
+    const recommendations = section.querySelector('product-recommendations');
+    if (!recommendations) return;
+
+    const initCards = () => {
+      if (typeof initProductCards === 'function') {
+        initProductCards(recommendations);
+      }
+    };
+
+    const observer = new MutationObserver(() => {
+      if (recommendations.querySelector('.product-card-objyx')) {
+        initCards();
+        observer.disconnect();
+      }
+    });
+
+    observer.observe(recommendations, { childList: true, subtree: true });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Recommandations panier",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Sur-titre",
+      "default": "Pour vous"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Titre",
+      "default": "Vous aimerez aussi"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Sous-titre",
+      "default": "Selection parfaite pour completer votre panier"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 4,
+      "label": "Produits a afficher"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4,
+      "label": "Colonnes desktop"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "default": "2",
+      "label": "Colonnes mobile",
+      "options": [
+        {
+          "value": "1",
+          "label": "1 colonne"
+        },
+        {
+          "value": "2",
+          "label": "2 colonnes"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Recommandations panier"
+    }
+  ]
+}
+{% endschema %}
