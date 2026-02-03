@@ -34,11 +34,24 @@
         "columns_desktop": 4,
         "columns_mobile": "2"
       }
+    },
+    "discover-products": {
+      "type": "products-list-objyx",
+      "settings": {
+        "kicker": "Decouvrir",
+        "heading": "Decouvrir d'autres produits",
+        "subheading": "Encore plus de jouets pour faire plaisir",
+        "collection": "all",
+        "products_per_page": 8,
+        "columns_desktop": 4,
+        "columns_mobile": "2"
+      }
     }
   },
   "order": [
     "cart-items",
     "cart-footer",
-    "cart-recommendations"
+    "cart-recommendations",
+    "discover-products"
   ]
 }

@@ -1,6 +1,6 @@
-{{ 'component-card.css' | asset_url | stylesheet_tag }}
-{{ 'component-price.css' | asset_url | stylesheet_tag }}
-{{ 'section-related-products.css' | asset_url | stylesheet_tag }}
+{{ 'section-products-list-objyx.css' | asset_url | stylesheet_tag }}
+{{ 'product-card-add-to-cart.js' | asset_url | script_tag }}
+{{ 'product-card-objyx.js' | asset_url | script_tag }}
 
 {% if section.settings.image_shape == 'blob' %}
   {{ 'mask-blobs.css' | asset_url | stylesheet_tag }}
@@ -27,32 +27,75 @@
     data-section-id="{{ section.id }}"
     data-product-id="{{ product.id }}"
   >
+    {%- assign fallback_collection = section.settings.fallback_collection | default: collections.all -%}
     {% if recommendations.performed and recommendations.products_count > 0 %}
-      <h2 class="related-products__heading inline-richtext {{ section.settings.heading_size }}">
-        {{ section.settings.heading }}
-      </h2>
-      <ul
-        class="grid product-grid grid--{{ section.settings.columns_desktop }}-col-desktop grid--{{ section.settings.columns_mobile }}-col-tablet-down"
-        role="list"
+      <section
+        class="products-list-objyx section-products-list"
+        data-desktop-columns="{{ section.settings.columns_desktop }}"
+        data-mobile-columns="{{ section.settings.columns_mobile }}"
       >
-        {% assign skip_card_product_styles = false %}
-        {% for recommendation in recommendations.products %}
-          <li class="grid__item">
-            {% render 'card-product',
-              card_product: recommendation,
-              media_aspect_ratio: section.settings.image_ratio,
-              image_shape: section.settings.image_shape,
-              show_secondary_image: section.settings.show_secondary_image,
-              show_vendor: section.settings.show_vendor,
-              show_rating: section.settings.show_rating,
-              skip_styles: skip_card_product_styles
-            %}
-          </li>
-          {%- assign skip_card_product_styles = true -%}
-        {% endfor %}
-      </ul>
+        <div class="products-list-objyx__container">
+          <div class="products-list-objyx__title">
+            <span class="products-list-objyx__kicker">Pour vous</span>
+            <h2 class="products-list-objyx__heading">{{ section.settings.heading }}</h2>
+          </div>
+
+          <div class="products-list-objyx__grid">
+            {%- for recommendation in recommendations.products -%}
+              {%- render 'product-card-objyx', product: recommendation -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      </section>
+    {% elsif fallback_collection != blank %}
+      <section
+        class="products-list-objyx section-products-list"
+        data-desktop-columns="{{ section.settings.columns_desktop }}"
+        data-mobile-columns="{{ section.settings.columns_mobile }}"
+      >
+        <div class="products-list-objyx__container">
+          <div class="products-list-objyx__title">
+            <span class="products-list-objyx__kicker">Pour vous</span>
+            <h2 class="products-list-objyx__heading">{{ section.settings.heading }}</h2>
+          </div>
+
+          <div class="products-list-objyx__grid">
+            {%- for product in fallback_collection.products limit: section.settings.products_to_show -%}
+              {%- render 'product-card-objyx', product: product -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      </section>
     {% endif %}
   </product-recommendations>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const scriptEl = document.currentScript;
+    if (!scriptEl) return;
+    const section = scriptEl.closest('.related-products');
+    if (!section) return;
+    const recommendations = section.querySelector('product-recommendations');
+    if (!recommendations) return;
+
+    const initCards = () => {
+      if (typeof initProductCards === 'function') {
+        initProductCards(recommendations);
+      }
+    };
+
+    initCards();
+
+    const observer = new MutationObserver(() => {
+      if (recommendations.querySelector('.product-card-objyx')) {
+        initCards();
+        observer.disconnect();
+      }
+    });
+
+    observer.observe(recommendations, { childList: true, subtree: true });
+  });
+</script>
   {% if section.settings.image_shape == 'arch' %}
     {{ 'mask-arch.svg' | inline_asset_content }}
   {%- endif -%}
@@ -67,6 +110,11 @@
     {
       "type": "paragraph",
       "content": "t:sections.related-products.settings.paragraph__1.content"
+    },
+    {
+      "type": "collection",
+      "id": "fallback_collection",
+      "label": "Collection de secours"
     },
     {
       "type": "inline_richtext",
