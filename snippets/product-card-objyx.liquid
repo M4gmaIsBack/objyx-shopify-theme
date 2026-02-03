@@ -1,17 +1,23 @@
 <div class="product-card-objyx">
-  <div class="product-card-objyx__image-wrapper">
-    {%- if product.featured_image -%}
-      <img
-        src="{{ product.featured_image | image_url: width: 400 }}"
-        alt="{{ product.featured_image.alt | escape }}"
-        loading="lazy"
-        class="product-card-objyx__image"
-      >
-    {%- endif -%}
+  <div class="product-card-objyx__media">
+    <a href="{{ product.url }}" class="product-card-objyx__image-wrapper">
+      {%- if product.featured_image -%}
+        <img
+          src="{{ product.featured_image | image_url: width: 500 }}"
+          alt="{{ product.featured_image.alt | escape }}"
+          loading="lazy"
+          class="product-card-objyx__image"
+        >
+      {%- endif -%}
 
-    {%- if product.tags contains 'new' -%}
-      <span class="product-card-objyx__badge">New</span>
-    {%- endif -%}
+      {%- if product.tags contains 'new' -%}
+        <span class="product-card-objyx__badge">Nouveau</span>
+      {%- endif -%}
+
+      {%- if product.compare_at_price_max > product.price -%}
+        <span class="product-card-objyx__promo">Promo</span>
+      {%- endif -%}
+    </a>
 
     <button
       class="product-card-objyx__add-to-cart"
@@ -25,48 +31,70 @@
         <circle cx="20" cy="21" r="1"></circle>
         <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
       </svg>
+      <span class="product-card-objyx__add-label">Ajouter</span>
     </button>
   </div>
 
-  <a href="{{ product.url }}" class="product-card-objyx__link"></a>
-
   <div class="product-card-objyx__content">
-    <h3 class="product-card-objyx__title">{{ product.title }}</h3>
+    <h3 class="product-card-objyx__title">
+      <a href="{{ product.url }}" class="product-card-objyx__title-link">{{ product.title }}</a>
+    </h3>
 
-    {%- if product.options_with_values.size > 0 -%}
-      {%- for option in product.options_with_values -%}
-        {%- if option.name == 'Color' or option.name == 'Couleur' -%}
-          <div class="product-card-objyx__colors">
-            {%- assign color_count = option.values.size -%}
-            {%- for value in option.values limit: 5 -%}
-              {%- assign color_class = value | downcase | replace: ' ', '-' -%}
-              <span
-                class="product-card-objyx__color product-card-objyx__color--{{ color_class }}"
-                title="{{ value }}"
-              ></span>
-            {%- endfor -%}
-            {%- if color_count > 5 -%}
-              <span class="product-card-objyx__color-count">+{{ color_count | minus: 5 }}</span>
-            {%- endif -%}
-          </div>
-        {%- endif -%}
-      {%- endfor -%}
-    {%- endif -%}
+    {%- assign has_color_option = false -%}
+    {%- assign color_option = nil -%}
+    {%- assign show_meta = false -%}
+    {%- for option in product.options_with_values -%}
+      {%- assign option_handle = option.name | handleize -%}
+      {%- if option_handle == 'color' or option_handle == 'couleur' -%}
+        {%- assign has_color_option = true -%}
+        {%- assign color_option = option -%}
+      {%- endif -%}
+      {%- if option_handle == 'materiau-du-jeu-jouet'
+        or option_handle == 'matiere-du-jeu-jouet'
+        or option_handle == 'material'
+        or option_handle == 'materiau'
+        or option_handle == 'matiere'
+      -%}
+        {%- assign show_meta = true -%}
+      {%- endif -%}
+    {%- endfor -%}
 
-    <div class="product-card-objyx__meta-fields">
-      {%- if product.options_with_values.size > 0 -%}
+    <div class="product-card-objyx__variants">
+      {%- if product.has_only_default_variant -%}
+        <span class="product-card-objyx__variant-chip is-unique">Unique</span>
+      {%- elsif has_color_option and color_option != nil -%}
+        <div class="product-card-objyx__swatches" aria-label="Couleurs disponibles">
+          {%- assign color_count = color_option.values.size -%}
+          {%- for value in color_option.values limit: 6 -%}
+            {%- assign color_class = value | downcase | replace: ' ', '-' | replace: '/', '-' -%}
+            <span
+              class="product-card-objyx__swatch product-card-objyx__swatch--{{ color_class }}"
+              title="{{ value }}"
+            ></span>
+          {%- endfor -%}
+          {%- if color_count > 6 -%}
+            <span class="product-card-objyx__swatch-count">+{{ color_count | minus: 6 }}</span>
+          {%- endif -%}
+        </div>
+      {%- else -%}
+        {%- assign option = product.options_with_values.first -%}
+        <div class="product-card-objyx__variant-chips" aria-label="Variantes disponibles">
+          {%- assign value_count = option.values.size -%}
+          {%- for value in option.values limit: 4 -%}
+            <span class="product-card-objyx__variant-chip">{{ value }}</span>
+          {%- endfor -%}
+          {%- if value_count > 4 -%}
+            <span class="product-card-objyx__variant-chip is-more">+{{ value_count | minus: 4 }}</span>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- if show_meta -%}
+      <div class="product-card-objyx__meta-fields">
         {%- for option in product.options_with_values -%}
           {%- assign option_handle = option.name | handleize -%}
-          {%- if option_handle == 'couleur' or option_handle == 'color' -%}
-            <div class="product-card-objyx__meta-spec">
-              <span class="product-card-objyx__meta-label">{{ option.name }}:</span>
-              <div class="product-card-objyx__meta-values">
-                {%- for value in option.values -%}
-                  <span class="product-card-objyx__meta-badge">{{ value }}</span>
-                {%- endfor -%}
-              </div>
-            </div>
-          {%- elsif option_handle == 'materiau-du-jeu-jouet'
+          {%- if option_handle == 'materiau-du-jeu-jouet'
             or option_handle == 'matiere-du-jeu-jouet'
             or option_handle == 'material'
             or option_handle == 'materiau'
@@ -82,8 +110,8 @@
             </div>
           {%- endif -%}
         {%- endfor -%}
-      {%- endif -%}
-    </div>
+      </div>
+    {%- endif -%}
 
     <div class="product-card-objyx__pricing">
       {%- if product.compare_at_price_max > product.price -%}

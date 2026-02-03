@@ -1,10 +1,33 @@
 {{ 'section-products-list-objyx.css' | asset_url | stylesheet_tag }}
 {{ 'product-card-add-to-cart.js' | asset_url | script_tag }}
 
-<section class="products-list-objyx">
+{%- assign heading_text = section.settings.heading -%}
+{%- if heading_text == blank and section.settings.collection != blank -%}
+  {%- assign heading_text = section.settings.collection.title -%}
+{%- endif -%}
+{%- assign kicker_text = section.settings.kicker -%}
+{%- if kicker_text == blank and heading_text != blank -%}
+  {%- assign kicker_text = 'Categorie' -%}
+{%- endif -%}
+
+<section
+  class="products-list-objyx section-products-list"
+  data-desktop-columns="{{ section.settings.columns_desktop }}"
+  data-mobile-columns="{{ section.settings.columns_mobile }}"
+>
   <div class="products-list-objyx__container">
-    {%- if section.settings.heading != blank -%}
-      <h2 class="products-list-objyx__heading">{{ section.settings.heading }}</h2>
+    {%- if heading_text != blank or section.settings.subheading != blank or kicker_text != blank -%}
+      <div class="products-list-objyx__title">
+        {%- if kicker_text != blank -%}
+          <span class="products-list-objyx__kicker">{{ kicker_text }}</span>
+        {%- endif -%}
+        {%- if heading_text != blank -%}
+          <h2 class="products-list-objyx__heading">{{ heading_text }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="products-list-objyx__subheading">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+      </div>
     {%- endif -%}
 
     <div class="products-list-objyx__grid" id="productsGrid">
@@ -44,7 +67,7 @@
       const total = parseInt(btn.dataset.total);
       const next = loaded + perPage;
 
-      // Récupérer les produits via AJAX ou afficher les produits cachés
+      // Recuperer les produits via AJAX ou afficher les produits caches
       const allProducts = grid.querySelectorAll('.product-card-objyx');
 
       for (let i = loaded; i < Math.min(next, total); i++) {
@@ -70,8 +93,18 @@
   "settings": [
     {
       "type": "text",
+      "id": "kicker",
+      "label": "Sur-titre (petit label)"
+    },
+    {
+      "type": "text",
       "id": "heading",
       "label": "Titre de la section"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Sous-titre"
     },
     {
       "type": "collection",
