@@ -5,6 +5,7 @@
 {%- endfor -%}
 ]
 {%- endcapture -%}
+{%- assign tag_string = product.tags | join: ',' | downcase -%}
 
 <div
   class="product-card-objyx{% if card_hidden %} is-hidden{% endif %}"
@@ -22,7 +23,7 @@
         >
       {%- endif -%}
 
-      {%- if product.tags contains 'new' -%}
+      {%- if tag_string contains 'new' or tag_string contains 'nouveau' or tag_string contains 'nouveaute' -%}
         <span class="product-card-objyx__badge">Nouveau</span>
       {%- endif -%}
 
@@ -82,18 +83,34 @@
           {%- for value in color_option.values limit: 6 -%}
             {%- assign color_class = value | downcase | replace: ' ', '-' | replace: '/', '-' -%}
             {%- assign variant_image = '' -%}
+            {%- assign variant_id = '' -%}
             {%- for variant in product.variants -%}
-              {%- if variant.options[option_index] == value and variant.featured_image -%}
-                {%- assign variant_image = variant.featured_image | image_url: width: 900 -%}
+              {%- if variant.options[option_index] == value and variant.available -%}
+                {%- assign variant_id = variant.id -%}
+                {%- if variant.featured_image -%}
+                  {%- assign variant_image = variant.featured_image | image_url: width: 900 -%}
+                {%- endif -%}
                 {%- break -%}
               {%- endif -%}
             {%- endfor -%}
+            {%- if variant_id == '' -%}
+              {%- for variant in product.variants -%}
+                {%- if variant.options[option_index] == value -%}
+                  {%- assign variant_id = variant.id -%}
+                  {%- if variant.featured_image -%}
+                    {%- assign variant_image = variant.featured_image | image_url: width: 900 -%}
+                  {%- endif -%}
+                  {%- break -%}
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endif -%}
             <button
               class="product-card-objyx__swatch product-card-objyx__swatch--{{ color_class }}"
               type="button"
               title="{{ value }}"
               aria-label="{{ value }}"
               data-variant-image="{{ variant_image }}"
+              data-variant-id="{{ variant_id }}"
             ></button>
           {%- endfor -%}
           {%- if color_count > 6 -%}

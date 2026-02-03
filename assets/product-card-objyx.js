@@ -1,9 +1,10 @@
-document.addEventListener('DOMContentLoaded', function () {
-  const cards = document.querySelectorAll('.product-card-objyx');
+function initProductCards(root = document) {
+  const cards = root.querySelectorAll('.product-card-objyx');
 
   cards.forEach((card) => {
     const img = card.querySelector('.product-card-objyx__image');
     if (!img) return;
+    const addToCartBtn = card.querySelector('.product-card-objyx__add-to-cart');
 
     const defaultSrc = img.getAttribute('data-default-src') || img.getAttribute('src');
     let images = [];
@@ -47,11 +48,25 @@ document.addEventListener('DOMContentLoaded', function () {
       swatch.addEventListener('click', (event) => {
         event.preventDefault();
         const variantImage = swatch.getAttribute('data-variant-image');
+        const variantId = swatch.getAttribute('data-variant-id');
         if (variantImage) {
           manualSrc = variantImage;
           showSrc(variantImage);
         }
+        if (variantId && addToCartBtn) {
+          addToCartBtn.setAttribute('data-variant-id', variantId);
+        }
+        swatches.forEach((item) => item.classList.remove('is-selected'));
+        swatch.classList.add('is-selected');
       });
     });
   });
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  initProductCards();
+});
+
+document.addEventListener('shopify:section:load', function (event) {
+  initProductCards(event.target);
 });

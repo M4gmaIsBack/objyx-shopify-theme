@@ -150,3 +150,38 @@ variant-selects {
   }
 }
 /* End custom styles for Swatch display type */
+
+
+/* OBJYX Variant Redesign */
+.product-form__input--pill input[type='radio'] + label {
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: #fff;
+  color: #1b1b1f;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 0.7rem 1.4rem;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+}
+
+.product-form__input--pill input[type='radio']:checked + label {
+  background: #ff7a1a;
+  color: #fff;
+  border-color: #ff7a1a;
+}
+
+.product-form__input--pill input[type='radio'] + label:hover {
+  border-color: #ff7a1a;
+}
+
+.product-form__input--swatch .swatch-input__input + .swatch-input__label {
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  border: 2px solid #fff;
+}
+
+.product-form__input--swatch .swatch-input__input:checked + .swatch-input__label {
+  outline: 2px solid #ff7a1a;
+  outline-offset: 2px;
+}
+
