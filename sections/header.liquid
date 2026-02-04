@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="{{ 'section-header-objyx.css' | asset_url }}" media="print" onload="this.media='all'">
+{{ 'component-search.css' | asset_url | stylesheet_tag }}
 
 {%- if settings.predictive_search_enabled -%}
   <link rel="stylesheet" href="{{ 'component-price.css' | asset_url }}" media="print" onload="this.media='all'">
@@ -14,9 +15,7 @@
         </a>
       </li>
       <li>
-        <a href="{{ shop.url }}/pages/track-order" class="header-topbar__link">
-          {{- 'header.topbar.track' | t: default: 'Suivre ma commande' -}}
-        </a>
+        {%- comment -%} Track order link removed {%- endcomment -%}
       </li>
     </ul>
   </div>

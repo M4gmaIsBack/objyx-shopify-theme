@@ -1,34 +1,8 @@
 {%- # Icônes du header (compte, panier, recherche) -%}
 
 <div class="header-main__actions">
-  <!-- Search Desktop -->
-  <form
-    class="header-main__search-form header-main__search"
-    method="GET"
-    action="{{ routes.search_url }}"
-    role="search"
-  >
-    <div class="header-main__search-form">
-      <svg
-        class="header-main__search-icon"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-      >
-        <circle cx="11" cy="11" r="8"></circle>
-        <path d="m21 21-4.35-4.35"></path>
-      </svg>
-      <input
-        type="search"
-        name="q"
-        class="header-main__search-input"
-        placeholder="{{ 'header.search.placeholder' | t }}"
-        aria-label="{{ 'header.search.label' | t }}"
-      >
-    </div>
-  </form>
+  <!-- Shopify Search Modal (Predictive Search) -->
+  {%- render 'header-search', input_id: 'HeaderSearchInput' -%}
 
   <!-- Account -->
   {%- if shop.customer_accounts_enabled -%}
