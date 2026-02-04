@@ -44,10 +44,18 @@
             "text": "Prochain arrivage Paw Patrol le 07/02/26",
             "link": ""
           }
+        },
+        "announcement_free_ship": {
+          "type": "announcement",
+          "settings": {
+            "text": "Livraison gratuite a partir 30 euros",
+            "link": ""
+          }
         }
       },
       "block_order": [
-        "announcement_mY8aQM"
+        "announcement_mY8aQM",
+        "announcement_free_ship"
       ],
       "settings": {
         "auto_rotate": true,
