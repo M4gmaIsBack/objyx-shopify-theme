@@ -35,6 +35,30 @@
         "enable_language_selector": false
       }
     },
+    "announcement_bar_dg7ndY": {
+      "type": "announcement-bar",
+      "blocks": {
+        "announcement_mY8aQM": {
+          "type": "announcement",
+          "settings": {
+            "text": "Prochain arrivage Paw Patrol le 07/02/26",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "announcement_mY8aQM"
+      ],
+      "settings": {
+        "auto_rotate": true,
+        "change_slides_speed": 5,
+        "color_scheme": "scheme-64227164-4f47-4424-a007-2db9601bcce6",
+        "show_line_separator": true,
+        "show_social": false,
+        "enable_country_selector": false,
+        "enable_language_selector": false
+      }
+    },
     "header": {
       "type": "header",
       "custom_css": [],
@@ -45,6 +69,7 @@
   },
   "order": [
     "announcement-bar",
+    "announcement_bar_dg7ndY",
     "header"
   ]
 }
