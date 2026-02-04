@@ -48,7 +48,7 @@
         "announcement_free_ship": {
           "type": "announcement",
           "settings": {
-            "text": "Livraison gratuite a partir 30 euros",
+            "text": "Livraison gratuite à partir de 30 euros",
             "link": ""
           }
         }
