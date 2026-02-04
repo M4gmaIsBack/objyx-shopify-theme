@@ -47,9 +47,6 @@
                 >
                 <div class="categories-grid-objyx__label">
                   <span class="categories-grid-objyx__label-title">{{ collection.title }}</span>
-                  {%- if section.settings.show_product_count -%}
-                    <span class="categories-grid-objyx__label-count">{{ collection.products_count }} produits</span>
-                  {%- endif -%}
                 </div>
               </div>
               <div class="categories-grid-objyx__cta">
@@ -84,12 +81,6 @@
       "type": "textarea",
       "id": "subheading",
       "label": "Sous-titre"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_product_count",
-      "label": "Afficher le nombre de produits",
-      "default": true
     },
     {
       "type": "range",
